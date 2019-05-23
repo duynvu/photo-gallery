@@ -1,0 +1,16 @@
+.photo {
+    padding: 0 10px;
+    box-sizing: border-box;
+    flex: auto;
+    margin-top: 10px;
+}
+
+.photo > img{
+    width: 100%;
+    box-shadow: 0px 1px 1px 0px #000;
+    transition: .3s all ease;
+    cursor: pointer;
+}
+.photo > img:hover{
+    transform: scale(1.05);
+}
