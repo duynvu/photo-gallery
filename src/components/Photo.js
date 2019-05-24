@@ -5,7 +5,7 @@ function Photo(props) {
   const {url, name, description} = props.photo;
   return (
     <div className="photo">
-      <img src={url} alt={description}  />
+      <img src={url} alt={description} onClick={() => props.onPhotoClick(props.photo)} />
     </div>
   )
 }
