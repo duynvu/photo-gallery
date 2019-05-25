@@ -1,4 +1,4 @@
-.photo {
+/* .photo {
     padding: 0 10px;
     box-sizing: border-box;
     flex: auto;
@@ -13,4 +13,4 @@
 }
 .photo > img:hover{
     transform: scale(1.05);
-}
+} */

@@ -5,9 +5,10 @@ import './App.css';
 import PhotoContainer from './components/PhotoContainer.js';
 import InfiniteScroll from "react-infinite-scroll-component";
 import Modal from 'react-modal';
+import ImageUpload from './components/ImageUpload.js';
+import { saveRandomPhotosToLocalStorage, getPhotosFromLocalStorage } from './utils';
 
 const pexelsApiKey = "563492ad6f917000010000018ec994e4c8de410393f6f76bd4ca62b3";
-
 
 // const key = {
 //   applicationId: "2cdd6a5568d8d3c6ec6aab4fd244819b4b51809365cd47710d21cafea6699e0b",
@@ -19,21 +20,25 @@ const pexelsApiKey = "563492ad6f917000010000018ec994e4c8de410393f6f76bd4ca62b3";
 // }
 
 const customStyles = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)',
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '',
+    transform: 'translate(-50%, -50%)',
+    minWidth: '400px',
   },
-  container : {
+  container: {
     display: 'flex',
-    flexDirection : 'row',
+    flexDirection: 'row',
   },
-
+  image: {
+    height: '80vh',
+    naxWidth: '80vw',
+  }
 };
- 
+
 const sampleImages = [
   {
     url: 'https://images.pexels.com/photos/203088/pexels-photo-203088.jpeg?auto=compress&cs=tinysrgb&h=350',
@@ -44,12 +49,12 @@ const sampleImages = [
     url: 'https://images.pexels.com/photos/1599946/pexels-photo-1599946.jpeg?auto=compress&cs=tinysrgb&h=350',
     name: 'afiohaowiehfoah',
     description: 'ncaowjoef'
-  },  
+  },
   {
     url: 'https://images.pexels.com/photos/1034812/pexels-photo-1034812.jpeg?auto=compress&cs=tinysrgb&h=350',
     name: 'awrgar',
     description: 'aergaergqergq'
-  },  
+  },
   {
     url: 'https://images.pexels.com/photos/1417651/pexels-photo-1417651.jpeg?auto=compress&cs=tinysrgb&h=350',
     name: 'qerg',
@@ -64,12 +69,12 @@ const sampleImages = [
     url: 'https://images.pexels.com/photos/1599946/pexels-photo-1599946.jpeg?auto=compress&cs=tinysrgb&h=350',
     name: 'q',
     description: 'gqergqe'
-  },  
+  },
   {
     url: 'https://images.pexels.com/photos/1034812/pexels-photo-1034812.jpeg?auto=compress&cs=tinysrgb&h=350',
     name: '',
     description: ''
-  },  
+  },
   {
     url: 'https://images.pexels.com/photos/1417651/pexels-photo-1417651.jpeg?auto=compress&cs=tinysrgb&h=350',
     name: '',
@@ -84,27 +89,27 @@ const sampleImages = [
     url: 'https://images.pexels.com/photos/1599946/pexels-photo-1599946.jpeg?auto=compress&cs=tinysrgb&h=350',
     name: '',
     description: ''
-  },  
+  },
   {
     url: 'https://images.pexels.com/photos/1034812/pexels-photo-1034812.jpeg?auto=compress&cs=tinysrgb&h=350',
     name: '',
     description: ''
-  },  
+  },
 
 ]
 
 var arr = [];
 
 function App() {
-  // const unsplash = new Unsplash(fakeKey);
-  // const pexelsClient = new PexelsAPI(pexelsApiKey);
+  saveRandomPhotosToLocalStorage();
 
-  const [photos, setPhotos] = useState(sampleImages);
+  const [photos, setPhotos] = useState(getPhotosFromLocalStorage());
   const [hasMore, setHasMore] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImg, setModalImg] = useState({});
-  
+  const [isUpload, setIsUpload] = useState(false);
+
   // useEffect(() => {
   //   pexelsClient.getCuratedPhotos(10, 1)
   //   .then((result) => {
@@ -157,26 +162,24 @@ function App() {
     })
     setIsLoading(true);
     a.then((result) => {
-      // console.log([...photos, ...result]);
-      arr = [...arr, ...result];
-      console.log(arr);
-        setPhotos([...photos, ...result]);
-        setIsLoading(false);
-      }).catch((err) => console.log(err));
+      setPhotos([...photos, ...result]);
+      setIsLoading(false);
+    }).catch((err) => console.log(err));
   }
 
-  const openModal = (photo) => {
+  const openImgModal = (photo) => {
     setIsModalOpen(true);
     setModalImg(photo);
   }
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setIsUpload(false);
   }
 
   const previousModalImage = () => {
     let index = findIndex();
-    index = index === 0 ? index: index - 1;
+    index = index === 0 ? index : index - 1;
     setModalImg(photos[index]);
   }
 
@@ -187,6 +190,15 @@ function App() {
 
   const findIndex = () => photos.findIndex((p) => modalImg.url === p.url);
 
+  const uploadPhoto = (photo) => {
+    setPhotos([photo, ...photos]);
+    closeModal();
+  }
+
+  const openUploadModal = () => {
+    setIsModalOpen(true);
+    setIsUpload(true);
+  }
 
   return (
     <div className="App">
@@ -197,12 +209,13 @@ function App() {
         contentLabel="Example Modal"
         ariaHideApp={false}
       >
-        <div style={customStyles.container}>
-          <div style={{paddingRight: '5px'}}>
-            <img src={modalImg.url}/>
+        {isUpload && <ImageUpload uploadPhoto={uploadPhoto} />}
+        {!isUpload && <div style={customStyles.container}>
+          <div style={{ paddingRight: '5px' }}>
+            <img src={modalImg.url} style={customStyles.image} />
             <div>
               <button onClick={previousModalImage}>Previous</button>
-              <button style={{float: 'right'}} onClick={nextModalImage}>Next</button>
+              <button style={{ float: 'right' }} onClick={nextModalImage}>Next</button>
             </div>
           </div>
           <div style={{
@@ -211,10 +224,11 @@ function App() {
             <p><strong>{modalImg.name}</strong></p>
             <p>{modalImg.description}</p>
           </div>
-        </div>
+        </div>}
       </Modal>
       <h1>Photo Gallery</h1>
-      <hr/>
+      <button onClick={openUploadModal}>Upload</button>
+      <hr />
       <div className="c">
         <InfiniteScroll
           dataLength={photos.length}
@@ -222,7 +236,7 @@ function App() {
           hasMore={true}
           loader={<h4>Loading...</h4>}
         >
-          <PhotoContainer photos={photos} onPhotoClick={openModal}/>
+          <PhotoContainer photos={photos} onPhotoClick={openImgModal} />
         </InfiniteScroll>
       </div>
     </div>
