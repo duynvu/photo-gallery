@@ -45,7 +45,7 @@ function ImageUpload(props) {
   return (
     <form onSubmit={handleSubmit}>
       <div className="form-group">
-        <label>Name: </label>
+        <label htmlFor="nameInput">Name: </label>
         <input type="text" id="nameInput" className="form-control" required />
       </div>
       <div className="form-group">
