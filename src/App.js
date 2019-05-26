@@ -6,7 +6,11 @@ import PhotoContainer from './components/PhotoContainer.js';
 import InfiniteScroll from "react-infinite-scroll-component";
 import Modal from 'react-modal';
 import ImageUpload from './components/ImageUpload.js';
-import { setIntitalPhotos, getPhotosFromLocalStorage } from './utils';
+import PhotoModal from './components/PhotoModal.js';
+import { 
+  setIntitalPhotos, 
+  getPhotosFromLocalStorage,
+  getRandomImages, } from './utils';
 
 // const pexelsApiKey = "563492ad6f917000010000018ec994e4c8de410393f6f76bd4ca62b3";
 
@@ -40,67 +44,8 @@ const customStyles = {
   }
 };
 
-const sampleImages = [
-  {
-    url: 'https://images.pexels.com/photos/203088/pexels-photo-203088.jpeg?auto=compress&cs=tinysrgb&h=350',
-    name: 'abc',
-    description: 'abc'
-  },
-  {
-    url: 'https://images.pexels.com/photos/1599946/pexels-photo-1599946.jpeg?auto=compress&cs=tinysrgb&h=350',
-    name: 'afiohaowiehfoah',
-    description: 'ncaowjoef'
-  },
-  {
-    url: 'https://images.pexels.com/photos/1034812/pexels-photo-1034812.jpeg?auto=compress&cs=tinysrgb&h=350',
-    name: 'awrgar',
-    description: 'aergaergqergq'
-  },
-  {
-    url: 'https://images.pexels.com/photos/1417651/pexels-photo-1417651.jpeg?auto=compress&cs=tinysrgb&h=350',
-    name: 'qerg',
-    description: 'qergergqerg'
-  },
-  {
-    url: 'https://images.pexels.com/photos/203088/pexels-photo-203088.jpeg?auto=compress&cs=tinysrgb&h=350',
-    name: 'qerg',
-    description: 'qergqergqreg'
-  },
-  {
-    url: 'https://images.pexels.com/photos/1599946/pexels-photo-1599946.jpeg?auto=compress&cs=tinysrgb&h=350',
-    name: 'q',
-    description: 'gqergqe'
-  },
-  {
-    url: 'https://images.pexels.com/photos/1034812/pexels-photo-1034812.jpeg?auto=compress&cs=tinysrgb&h=350',
-    name: '',
-    description: ''
-  },
-  {
-    url: 'https://images.pexels.com/photos/1417651/pexels-photo-1417651.jpeg?auto=compress&cs=tinysrgb&h=350',
-    name: '',
-    description: ''
-  },
-  {
-    url: 'https://images.pexels.com/photos/203088/pexels-photo-203088.jpeg?auto=compress&cs=tinysrgb&h=350',
-    name: '',
-    description: ''
-  },
-  {
-    url: 'https://images.pexels.com/photos/1599946/pexels-photo-1599946.jpeg?auto=compress&cs=tinysrgb&h=350',
-    name: '',
-    description: ''
-  },
-  {
-    url: 'https://images.pexels.com/photos/1034812/pexels-photo-1034812.jpeg?auto=compress&cs=tinysrgb&h=350',
-    name: '',
-    description: ''
-  },
-
-]
-
 function App() {
-  if(getPhotosFromLocalStorage().length === 0) {
+  if (getPhotosFromLocalStorage().length === 0) {
     setIntitalPhotos();
   }
   const [photos, setPhotos] = useState(getPhotosFromLocalStorage());
@@ -153,16 +98,18 @@ function App() {
   //   })
   // })
 
+
   const fetchMoreData = () => {
     const a = new Promise((resolve, reject) => {
       setTimeout(() => {
         // console.log(photos.length);
-        resolve(sampleImages);
+        resolve(getRandomImages());
       }, 500);
     })
     setIsLoading(true);
     a.then((result) => {
       setPhotos([...photos, ...result]);
+      console.log(photos);
       setIsLoading(false);
     }).catch((err) => console.log(err));
   }
@@ -184,11 +131,12 @@ function App() {
   }
 
   const nextModalImage = () => {
-    const index = findIndex() + 1;
+    let index = findIndex();
+    index = index === photos.length ? index: index + 1;
     setModalImg(photos[index]);
   }
 
-  const findIndex = () => photos.findIndex((p) => modalImg.url === p.url);
+  const findIndex = () => photos.findIndex((p) => modalImg.id === p.id);
 
   const uploadPhoto = (photo) => {
     setPhotos([photo, ...photos]);
@@ -210,23 +158,12 @@ function App() {
         ariaHideApp={false}
       >
         {isUpload && <ImageUpload uploadPhoto={uploadPhoto} />}
-        {!isUpload && 
-          <div style={customStyles.container}>
-          <div style={{ paddingRight: '5px' }}>
-            <img src={modalImg.url} style={customStyles.image} />
-            <div>
-              <button onClick={previousModalImage}>Previous</button>
-              <button style={{ float: 'right' }} onClick={nextModalImage}>Next</button>
-            </div>
-          </div>
-          <div style={{
-            margin: '0 10px 0 10px',
-          }}>
-            <p><strong>{modalImg.name}</strong></p>
-            <p>{modalImg.description}</p>
-          </div>
-        </div>
-      }
+        {!isUpload &&
+          <PhotoModal
+            modalImg={modalImg}
+            nextModalImage={nextModalImage}
+            previousModalImage={previousModalImage}
+          />}
       </Modal>
       <div className="header">
         <h1>Photo Gallery</h1>
