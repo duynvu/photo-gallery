@@ -94,13 +94,13 @@ export function setIntitalPhotos() {
 			description: 'ncaowjoef'
 		},
 		{
-      id: uuid(),
+			id: uuid(),
 			url: 'https://images.pexels.com/photos/1034812/pexels-photo-1034812.jpeg?auto=compress&cs=tinysrgb&h=350',
 			name: 'awrgar',
 			description: 'aergaergqergq'
 		},
 		{
-      id: uuid(),
+			id: uuid(),
 			url: 'https://images.pexels.com/photos/1417651/pexels-photo-1417651.jpeg?auto=compress&cs=tinysrgb&h=350',
 			name: 'qerg',
 			description: 'qergergqerg'
@@ -113,68 +113,68 @@ export function setIntitalPhotos() {
 export function getRandomImages(quantity = 10) {
 
 	const sampleData = [
-		{ 
-      id: uuid.v1(),
+		{
+			id: uuid.v1(),
 			name: 'Hang out with friends',
 			description: 'Sitting on white mat on grass field',
 			url: 'https://images.pexels.com/photos/745045/pexels-photo-745045.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
 		},
 		{
-      id: uuid.v1(),
+			id: uuid.v1(),
 			name: 'Food photography',
 			description: 'Flat-lay photography of vegetable salad on plate',
 			url: 'https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
 		},
 		{
-      id: uuid.v1(),
+			id: uuid.v1(),
 			name: 'nature',
 			description: 'Brown spider on leaf',
 			url: 'https://images.pexels.com/photos/2317423/pexels-photo-2317423.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
 
 		},
 		{
-      id: uuid.v1(),
+			id: uuid.v1(),
 			name: 'In town',
 			description: 'walk around',
 			url: 'https://images.pexels.com/photos/2338113/pexels-photo-2338113.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
 		},
 		{
-      id: uuid.v1(),
+			id: uuid.v1(),
 			name: 'Coffee time',
 			description: 'holding ipad',
 			url: 'https://images.pexels.com/photos/2309394/pexels-photo-2309394.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
 		},
 		{
-      id: uuid.v1(),
+			id: uuid.v1(),
 			name: 'Family',
 			description: 'happy together',
 			url: 'https://images.pexels.com/photos/2253879/pexels-photo-2253879.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
 		},
 		{
-      id: uuid.v1(),
+			id: uuid.v1(),
 			name: 'Coast',
 			discription: 'my hometown',
 			url: 'https://images.pexels.com/photos/2253818/pexels-photo-2253818.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
 		},
 		{
-      id: uuid.v1(),
+			id: uuid.v1(),
 			name: '10',
 			discription: 'boy with camera',
 			url: 'https://images.pexels.com/photos/2338044/pexels-photo-2338044.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
 		},
 		{
-      id: uuid.v1(),
+			id: uuid.v1(),
 			name: 'Plant',
 			discription: 'Cactus',
 			url: 'https://images.pexels.com/photos/2292100/pexels-photo-2292100.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
 		},
 		{
-      id: uuid.v1(),
+			id: uuid.v1(),
 			name: 'silverware',
 			discription: 'meal',
 			url: 'https://images.pexels.com/photos/2291591/pexels-photo-2291591.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'
 		}
-  ]
-  
-  return sampleData;
+	]
+
+	return sampleData;
 }

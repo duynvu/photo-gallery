@@ -37,23 +37,3 @@
 .header > button:focus {
     outline: none;
 }
-
-/* 
-@media (max-width:600px){
-    .modal {
-        width: 80vw;
-    }
-}
-  
-@media (min-width:601px){
-    .modal {
-        width: 60vw;
-    }
-}
-  
-@media (min-width:768px){
-    .modal {
-        width: 50vw;
-    }
-}
-   */
