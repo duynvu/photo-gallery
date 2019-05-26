@@ -40,7 +40,9 @@ export function savePhotoToLocalStorage(name, description, url) {
 		url,
 	}
 	photos = [newPhoto, ...photos];
+	console.log(photos);
 	localStorage.setItem("photos", JSON.stringify(photos));
+	console.log(JSON.parse(localStorage.getItem("photos")));
 	return newPhoto
 }
 
@@ -53,7 +55,7 @@ export function saveTemporaryImage(result) {
 	localStorage.setItem("imgData", result);
 }
 
-export function saveRandomPhotosToLocalStorage() {
+export function setIntitalPhotos() {
 	const sampleData = [
 		{
 			id: uuid.v1(),

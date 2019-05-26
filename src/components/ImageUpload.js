@@ -14,7 +14,7 @@ function ImageUpload(props) {
 
         reader.onload = function (e) {
           document.getElementById("imageShow").src = e.target.result;
-          // localStorage.setItem("imgData", e.target.result);
+          localStorage.setItem("imgData", e.target.result);
           setImgData(e.target.result);
         }
 
@@ -27,37 +27,27 @@ function ImageUpload(props) {
     const name = document.getElementById("nameInput").value;
     const description = document.getElementById("descriptionInput").value;
     const response = await getImageURL(document.getElementById("imageShow"));
-    console.log(response.data.image.url);
+    // console.log(response.data.image.url);
     const newPhoto = savePhotoToLocalStorage(name, description, response.data.image.url);
     props.uploadPhoto(newPhoto);
   }
 
-  // function showImage() {
-  //   const data = getPhotosFromLocalStorage();
-  //   console.log(data);
-  //   var dataImage = localStorage.getItem('imgData');
-  //   var bannerImg = document.getElementById('banner');
-  //   // bannerImg.src = "data:image/png;base64," + dataImage;
-  //   bannerImg.src = data[0].url;
-  // }
-
-
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} autoComplete="off">
       <div className="form-group">
-        <label htmlFor="nameInput">Name: </label>
+        <label htmlFor="nameInput">Name</label>
         <input type="text" id="nameInput" className="form-control" required />
       </div>
       <div className="form-group">
-        <label>Description: </label>
+        <label htmlFor="descriptionInput">Description</label>
         <input type="text" id="descriptionInput" className="form-control" required/><br/>
       </div>
       <div className="form-group">
         <input type="file" id="imageInput" onChange={handleUpload} />
-        <img src="" id="imageShow" style={{width: '40%'}}/>
+        <img src="" id="imageShow"/>
         {/* <button onClick="handleSubmit()">Save</button> */}
-        <button>Upload</button>
       </div>
+      <button>Upload</button>
     </form>
   )
 }

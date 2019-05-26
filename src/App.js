@@ -6,9 +6,9 @@ import PhotoContainer from './components/PhotoContainer.js';
 import InfiniteScroll from "react-infinite-scroll-component";
 import Modal from 'react-modal';
 import ImageUpload from './components/ImageUpload.js';
-import { saveRandomPhotosToLocalStorage, getPhotosFromLocalStorage } from './utils';
+import { setIntitalPhotos, getPhotosFromLocalStorage } from './utils';
 
-const pexelsApiKey = "563492ad6f917000010000018ec994e4c8de410393f6f76bd4ca62b3";
+// const pexelsApiKey = "563492ad6f917000010000018ec994e4c8de410393f6f76bd4ca62b3";
 
 // const key = {
 //   applicationId: "2cdd6a5568d8d3c6ec6aab4fd244819b4b51809365cd47710d21cafea6699e0b",
@@ -27,7 +27,8 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '',
     transform: 'translate(-50%, -50%)',
-    minWidth: '400px',
+    borderRadius: '10px',
+    // width: '60%',
   },
   container: {
     display: 'flex',
@@ -98,11 +99,10 @@ const sampleImages = [
 
 ]
 
-var arr = [];
-
 function App() {
-  saveRandomPhotosToLocalStorage();
-
+  if(getPhotosFromLocalStorage().length === 0) {
+    setIntitalPhotos();
+  }
   const [photos, setPhotos] = useState(getPhotosFromLocalStorage());
   const [hasMore, setHasMore] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -156,7 +156,7 @@ function App() {
   const fetchMoreData = () => {
     const a = new Promise((resolve, reject) => {
       setTimeout(() => {
-        console.log(photos.length);
+        // console.log(photos.length);
         resolve(sampleImages);
       }, 500);
     })
@@ -210,7 +210,8 @@ function App() {
         ariaHideApp={false}
       >
         {isUpload && <ImageUpload uploadPhoto={uploadPhoto} />}
-        {!isUpload && <div style={customStyles.container}>
+        {!isUpload && 
+          <div style={customStyles.container}>
           <div style={{ paddingRight: '5px' }}>
             <img src={modalImg.url} style={customStyles.image} />
             <div>
@@ -224,10 +225,16 @@ function App() {
             <p><strong>{modalImg.name}</strong></p>
             <p>{modalImg.description}</p>
           </div>
-        </div>}
+        </div>
+      }
       </Modal>
-      <h1>Photo Gallery</h1>
-      <button onClick={openUploadModal}>Upload</button>
+      <div className="header">
+        <h1>Photo Gallery</h1>
+        <p className="description">
+          created by <a href="https://github.com/duynvu">@duynvu</a>
+        </p>
+        <button onClick={openUploadModal}>Upload</button>
+      </div>
       <hr />
       <div className="c">
         <InfiniteScroll
