@@ -14,7 +14,7 @@ function ImageUpload(props) {
 
         reader.onload = function (e) {
           document.getElementById("imageShow").src = e.target.result;
-          localStorage.setItem("imgData", e.target.result);
+          // localStorage.setItem("imgData", e.target.result);
           setImgData(e.target.result);
         }
 
