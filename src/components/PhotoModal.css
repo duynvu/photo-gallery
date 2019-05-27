@@ -13,4 +13,15 @@
 
 }
 
-/* @media */
+.photoModal > .photoModalInfo {
+    display: flex;
+    flex-direction: row;
+}
+
+.photoModal > .photoModalInfo > .photoInfo {
+    flex-grow:1;
+}
+
+.photoModal > .photoModalInfo > .photoEditButton {
+    margin-top: 16px;
+}
