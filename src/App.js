@@ -32,10 +32,13 @@ const customStyles = {
 };
 
 function App() {
-  if (getPhotosFromLocalStorage().length === 0) {
-    setIntitalPhotos();
-  }
-  const [photos, setPhotos] = useState(getPhotosFromLocalStorage());
+  const [photos, setPhotos] = useState(() => { // lazy initial state
+    if (getPhotosFromLocalStorage().length === 0) {
+      setIntitalPhotos();
+    }
+    return getPhotosFromLocalStorage();
+  });
+
   // const [isLoading, setIsLoading] = useState(false); // used for infinite scroll in the future
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalImg, setModalImg] = useState({});

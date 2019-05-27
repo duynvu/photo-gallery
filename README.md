@@ -2,8 +2,7 @@
 *Nguyen Vu Duy*
 
 ## Introduction
-My name is Nguyen Vu Duy. This is a take-home assignment for Holistics Interview for intern.
-The requirement is building a simple photo gallery website. The duration for this assignment is three days. I choose React libray to do this project.
+My name is Nguyen Vu Duy. This is a simple photo gallery website. I use React hooks to implement this project.
 Github: [https://github.com/duynvu/photo-gallery/](https://github.com/duynvu/photo-gallery/).
 Website: [https://photo-gallery-vuduy.herokuapp.com/](https://photo-gallery-vuduy.herokuapp.com/).
 Email: [duynvu@gmail.com]()
